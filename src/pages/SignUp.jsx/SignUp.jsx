@@ -2,10 +2,9 @@ import { useContext } from "react";
 import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../../providers/AuthProvider";
-import SocialLogin from "../../components/SocialMedia/SocialLogin";
 
 const SignUp = () => {
-  const { createUser } = useContext(AuthContext);
+  const { createUser, updateLoggedInUserProfile } = useContext(AuthContext);
   const {
     register,
     handleSubmit,
@@ -16,30 +15,11 @@ const SignUp = () => {
     createUser(data.email, data.password).then((result) => {
       const loggedUser = result.user;
       console.log(loggedUser, data);
-      //   // updateLoggedInUserProfile(data.name, data.photoURL)
-      //   //   .then(() => {
-      //   //     // console.log("user Profile info update");
-      //   //     // inserted user information
-      //   //     const userInfo = {
-      //   //       name: data.name,
-      //   //       email: data.email,
-      //   //     };
-      //   //     axiosPublic.post("/users", userInfo).then((res) => {
-      //   //       if (res.data.insertedId) {
-      //   //         Swal.fire({
-      //   //           position: "top-end",
-      //   //           icon: "success",
-      //   //           title: "Register successfully",
-      //   //           showConfirmButton: false,
-      //   //           timer: 1500,
-      //   //         });
-      //   //         navigate("/");
-      //   //       }
-      //   //     });
-
-      //   //     reset();
-      //   //   })
-      //     .catch((err) => console.log(err));
+      updateLoggedInUserProfile(data.name, data.photoURL)
+        .then(() => {
+          console.log(result.user);
+        })
+        .catch((err) => console.log(err));
     });
   };
 

@@ -12,9 +12,7 @@ const Navbar = () => {
       <li>
         <NavLink to="/">Home</NavLink>
       </li>
-      <li>
-        <a>Blogs</a>
-      </li>
+
       {user ? (
         <>
           {user && (

@@ -7,6 +7,8 @@ import PrivateRoute from "./PrivateRoute/PrivateRoute";
 import Dashboard from "../layouts/Dashboard";
 import UserHome from "../pages/DashBoard/UserHome/UserHome";
 import AddTask from "../pages/DashBoard/AddTask/AddTask";
+import ToDoList from "../pages/DashBoard/ToDoList/ToDoList";
+import EditItem from "../pages/DashBoard/EditItem/EditItem";
 
 export const router = createBrowserRouter([
   {
@@ -42,6 +44,16 @@ export const router = createBrowserRouter([
       {
         path: "addTask",
         element: <AddTask></AddTask>,
+      },
+      {
+        path: "to-do",
+        element: <ToDoList></ToDoList>,
+      },
+      {
+        path: "updateItem/:id",
+        element: <EditItem></EditItem>,
+        loader: ({ params }) =>
+          fetch(`http://localhost:5000/tasks/${params.id}`),
       },
     ],
   },

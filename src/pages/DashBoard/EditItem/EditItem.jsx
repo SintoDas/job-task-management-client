@@ -1,14 +1,16 @@
 import { useForm } from "react-hook-form";
 import useAxiosPublic from "../../../hooks/useAxiosPublic";
 import Swal from "sweetalert2";
+import { useLoaderData } from "react-router-dom";
 
-const AddTask = () => {
-  const { register, handleSubmit, setValue } = useForm();
+const EditItem = () => {
+  const { register, handleSubmit } = useForm();
+  const { _id, title, description, deadline, priority } = useLoaderData();
+  console.log(title, description);
   const axiosPublic = useAxiosPublic();
 
   const onSubmit = async (data) => {
     // Handle form submission logic here
-    console.log("Task submitted:", data);
     const taskItem = {
       title: data.title,
       description: data.description,
@@ -16,25 +18,18 @@ const AddTask = () => {
       priority: data.priority,
     };
     // now send to secure way
-    const res = await axiosPublic.post("/task", taskItem);
+    const res = await axiosPublic.patch(`/tasks/${_id}`, taskItem);
     console.log(res.data);
-    if (res.data.insertedId) {
+    if (res.data.modifiedCount > 0) {
       Swal.fire({
         position: "top-end",
         icon: "success",
-        title: `${data.title} is added to the task`,
+        title: `${data.title} is Updated`,
         showConfirmButton: false,
         timer: 1500,
       });
     }
-
-    // Clear the form after submission
-    setValue("title", "");
-    setValue("description", "");
-    setValue("deadline", "");
-    setValue("priority", "low");
   };
-
   return (
     <div className="max-w-md mx-auto mt-8">
       <form
@@ -56,6 +51,7 @@ const AddTask = () => {
             id="title"
             name="title"
             {...register("title", { required: true })}
+            defaultValue={title}
             className="w-full px-4 py-2 border rounded-md focus:outline-none focus:border-blue-500"
           />
         </div>
@@ -72,6 +68,7 @@ const AddTask = () => {
             id="description"
             name="description"
             {...register("description")}
+            defaultValue={description}
             rows="4"
             className="w-full px-4 py-2 border rounded-md focus:outline-none focus:border-blue-500"
           ></textarea>
@@ -90,6 +87,7 @@ const AddTask = () => {
             id="deadline"
             name="deadline"
             {...register("deadline")}
+            defaultValue={deadline}
             className="w-full px-4 py-2 border rounded-md focus:outline-none focus:border-blue-500"
           />
         </div>
@@ -106,6 +104,7 @@ const AddTask = () => {
             id="priority"
             name="priority"
             {...register("priority")}
+            defaultValue={priority}
             className="w-full px-4 py-2 border rounded-md focus:outline-none focus:border-blue-500"
           >
             <option value="low">Low</option>
@@ -119,11 +118,11 @@ const AddTask = () => {
           type="submit"
           className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 focus:outline-none focus:shadow-outline-blue"
         >
-          Add Task
+          Update Task
         </button>
       </form>
     </div>
   );
 };
 
-export default AddTask;
+export default EditItem;

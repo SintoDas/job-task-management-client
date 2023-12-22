@@ -1,20 +1,52 @@
 import { Link } from "react-router-dom";
+import { motion } from "framer-motion";
 
 const Banner = () => {
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: { opacity: 1, transition: { duration: 1 } },
+  };
+
+  const textVariants = {
+    hidden: { y: 20, opacity: 0 },
+    visible: { y: 0, opacity: 1, transition: { duration: 1 } },
+  };
+
   return (
-    <div className="py-10">
-      <div className="bg-blue-500 text-white ">
+    <motion.div
+      className="py-10"
+      variants={containerVariants}
+      initial="hidden"
+      animate="visible"
+    >
+      <motion.div
+        className="bg-blue-200 text-black"
+        variants={containerVariants}
+        initial="hidden"
+        animate="visible"
+      >
         <div className="container mx-auto text-center">
-          <h1 className="text-4xl font-bold">Task Management App</h1>
-          <p className="mt-2">Stay organized and boost your productivity!</p>
+          <motion.h1
+            className="text-4xl font-bold mb-4 py-4"
+            variants={textVariants}
+          >
+            Task Management App
+          </motion.h1>
+          <motion.p className="mt-2" variants={textVariants}>
+            Stay organized and boost your productivity!
+          </motion.p>
           <Link to="/login">
-            <button className="btn btn-outline my-4 text-white">
+            <motion.button
+              className="btn btn-outline my-4 text-black"
+              whileHover={{ scale: 1.1 }}
+              whileTap={{ scale: 0.9 }}
+            >
               Let’s Explore
-            </button>
+            </motion.button>
           </Link>
         </div>
-      </div>
-    </div>
+      </motion.div>
+    </motion.div>
   );
 };
 

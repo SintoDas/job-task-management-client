@@ -8,8 +8,8 @@ const Login = () => {
   const { signIn } = useContext(AuthContext);
   //private route from and where go
   const navigate = useNavigate();
-  const location = useLocation();
-  let from = location.state?.from?.pathname || "/";
+  // const location = useLocation();
+  // let from = location.state?.from?.pathname || "/";
   const handleLogin = (e) => {
     e.preventDefault();
     const form = e.target;
@@ -25,7 +25,7 @@ const Login = () => {
           showConfirmButton: false,
           timer: 1500,
         });
-        navigate(from, { replace: true });
+        navigate("/dashboard/userHome");
       })
       .catch((error) => {
         console.log(error);
@@ -37,10 +37,10 @@ const Login = () => {
         <div className="hero-content flex-col lg:flex-row-reverse">
           <div className="text-center md:w-1/2 lg:text-left">
             <h1 className="text-5xl font-bold">Login now!</h1>
-            <p className="py-6 text-white">
-              Provident cupiditate voluptatem et in. Quaerat fugiat ut assumenda
-              excepturi exercitationem quasi. In deleniti eaque aut repudiandae
-              et a id nisi.
+            <p className="py-6 text-black">
+              ✨ Your tasks, beautifully arranged. ✨ Effortless collaboration
+              with your team. ✨ Personalized reminders to keep you on track. ✨
+              Achieve more, stress less.
             </p>
           </div>
           <div className="card flex-shrink-0 md:w-1/2 max-w-sm shadow-2xl bg-base-100">
