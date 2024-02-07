@@ -36,7 +36,7 @@ const EditItem = () => {
         onSubmit={handleSubmit(onSubmit)}
         className="bg-white p-8 rounded shadow-md"
       >
-        <h2 className="text-2xl font-semibold mb-6">New Task</h2>
+        <h2 className="text-2xl font-semibold mb-6">Edit Task</h2>
 
         {/* Title */}
         <div className="mb-4">
@@ -108,7 +108,7 @@ const EditItem = () => {
             className="w-full px-4 py-2 border rounded-md focus:outline-none focus:border-blue-500"
           >
             <option value="low">Low</option>
-            <option value="moderate">Moderate</option>
+            <option value="medium">medium</option>
             <option value="high">High</option>
           </select>
         </div>

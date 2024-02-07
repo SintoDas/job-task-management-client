@@ -88,6 +88,7 @@ const AddTask = () => {
           <input
             type="date"
             id="deadline"
+            defaultValue={new Date()}
             name="deadline"
             {...register("deadline")}
             className="w-full px-4 py-2 border rounded-md focus:outline-none focus:border-blue-500"
@@ -109,7 +110,7 @@ const AddTask = () => {
             className="w-full px-4 py-2 border rounded-md focus:outline-none focus:border-blue-500"
           >
             <option value="low">Low</option>
-            <option value="moderate">Moderate</option>
+            <option value="medium">medium</option>
             <option value="high">High</option>
           </select>
         </div>
