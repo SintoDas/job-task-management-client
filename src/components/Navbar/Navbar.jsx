@@ -1,77 +1,83 @@
 import { useContext } from "react";
-import { Link, NavLink } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import { AuthContext } from "../../providers/AuthProvider";
+import logoImg from "../../assets/IMG_20240208_025955.png";
 
 const Navbar = () => {
   const { user, logOut } = useContext(AuthContext);
+
   const handleLogOut = () => {
     logOut();
   };
+
   const navLinks = (
     <>
-      <li>
-        <NavLink to="/">Home</NavLink>
-      </li>
-
-      {user ? (
-        <>
-          {user && (
-            <li>
-              <Link to="/dashboard/userHome">Dashboard</Link>
-            </li>
-          )}
-          <button onClick={handleLogOut} className="btn btn-ghost btn-sm">
-            LogOut
+      <div className="flex gap-6 justify-center items-center">
+        <li>
+          <button className="btn btn-ghost btn-md text-lg">
+            <NavLink to="/">Home</NavLink>
           </button>
-        </>
-      ) : (
-        <>
-          <li>
-            <NavLink to="signUp">Register</NavLink>
-          </li>
-          <li>
-            <NavLink to="/login">Login</NavLink>
-          </li>
-        </>
-      )}
+        </li>
+
+        {user ? (
+          <>
+            <button
+              onClick={handleLogOut}
+              className="btn btn-ghost btn-md text-lg"
+            >
+              LogOut
+            </button>
+          </>
+        ) : (
+          <>
+            <li>
+              <button className="btn btn-ghost btn-md text-lg">
+                <NavLink to="/signUp">Register</NavLink>
+              </button>
+            </li>
+            <li>
+              <button className="btn btn-ghost btn-md text-lg">
+                <NavLink to="/login">Login</NavLink>
+              </button>
+            </li>
+          </>
+        )}
+      </div>
     </>
   );
   return (
-    <div>
-      <div className="navbar bg-base-100">
-        <div className="navbar-start">
-          <div className="dropdown">
-            <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="h-5 w-5"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  d="M4 6h16M4 12h8m-8 6h16"
-                />
-              </svg>
-            </div>
-            <ul
-              tabIndex={0}
-              className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52"
+    <div className="navbar bg-blue-400 text-white font-bold">
+      <div className="navbar-start">
+        <div className="dropdown">
+          <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="h-5 w-5"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
             >
-              {navLinks}
-            </ul>
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                d="M4 6h16M4 12h8m-8 6h16"
+              />
+            </svg>
           </div>
-          <a className="btn btn-ghost text-xl">Task Management</a>
+          <ul
+            tabIndex={0}
+            className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52"
+          >
+            {navLinks}
+          </ul>
         </div>
-        <div className="navbar-center hidden lg:flex">
-          <ul className="menu menu-horizontal px-1">{navLinks}</ul>
+        <div className="flex items-center  text-white">
+          <h2>Task Management</h2>
         </div>
-        <div className="navbar-end">
-          <a className="btn">Button</a>
-        </div>
+      </div>
+      <div className="navbar-center hidden lg:flex">
+        <ul className="menu menu-horizontal px-1">{navLinks}</ul>
       </div>
     </div>
   );

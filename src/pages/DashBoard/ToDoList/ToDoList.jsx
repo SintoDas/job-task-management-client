@@ -1,11 +1,15 @@
 import { useQuery } from "@tanstack/react-query";
 import useAxiosPublic from "../../../hooks/useAxiosPublic";
-import { FaEdit, FaTrash } from "react-icons/fa";
 import Swal from "sweetalert2";
-import { Link } from "react-router-dom";
+import AllTask from "./AllTask";
+import CompleteTask from "./CompleteTask";
+import IncompleteTask from "./IncompleteTask";
+import FilterTask from "../FilterByPriority/FilterTask";
+import { useState } from "react";
 
 const ToDoList = () => {
   const axiosPublic = useAxiosPublic();
+  const [selectedPriority, setSelectedPriority] = useState("all");
   const { data: tasks = [], refetch } = useQuery({
     queryKey: ["tasks"],
     queryFn: async () => {
@@ -13,7 +17,14 @@ const ToDoList = () => {
       return res.data;
     },
   });
-  const completedTasks = tasks.filter((task) => task.completed === true);
+  const filteredTasks = tasks.filter((task) => {
+    if (selectedPriority === "all") {
+      return true;
+    } else {
+      return task.priority === selectedPriority;
+    }
+  });
+
   const handleDelete = (task) => {
     Swal.fire({
       title: "Are you sure?",
@@ -62,81 +73,45 @@ const ToDoList = () => {
       });
   };
   return (
-    <div className="container mx-auto p-4 grid gap-8 grid-cols-1 md:grid-cols-2  ">
-      {/* To Do Section */}
-      <div>
-        <h2 className="text-3xl text-center font-bold mb-4">
-          <button className="btn uppercase">
-            To-Do
-            <div className="badge badge-primary">{tasks.length}</div>
-          </button>
-        </h2>
-        <div className="grid gap-5">
-          {tasks.map((task) => (
-            <div
-              key={task._id}
-              className="bg-white p-4 rounded-lg shadow-md relative"
-            >
-              <div className="absolute top-2 right-2 flex space-x-2">
-                <Link to={`/dashboard/updateItem/${task._id}`}>
-                  <FaEdit className="cursor-pointer text-blue-500 hover:text-blue-700" />
-                </Link>
-                <FaTrash
-                  onClick={() => handleDelete(task)}
-                  className="cursor-pointer text-red-500 hover:text-red-700"
-                />
-              </div>
-              <h2 className="text-xl font-semibold mb-2">{task?.title}</h2>
-              <p className="text-sm font-medium mb-2">{task?.description}</p>
-              <div className="flex flex-col md:flex-row justify-between items-center">
-                <h2 className="text-xl font-semibold mb-2">{task?.priority}</h2>
-                <p className="text-sm font-medium mb-2">{task?.deadline}</p>
-                <div>
-                  <button
-                    onClick={() => handleCompleted(task)}
-                    className={`btn cursor-pointer ${
-                      task.completed ? "text-green-500" : "text-blue-500"
-                    }`}
-                    disabled={task.completed}
-                  >
-                    {task.completed ? "Completed" : "Processing"}
-                  </button>
-                </div>
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
-
-      {/* Complete Section */}
-      <div>
-        <h2 className="text-3xl text-center font-bold mb-4">
-          <button className="btn uppercase ">
-            complete
-            <div className="badge badge-primary">{completedTasks.length}</div>
-          </button>
-        </h2>
-        <div className="grid gap-5">
-          {completedTasks &&
-            completedTasks.map((task) => (
-              <div
+    <div>
+      <FilterTask
+        selectedPriority={selectedPriority}
+        setSelectedPriority={setSelectedPriority}
+      />
+      <div className="container mx-auto p-4 grid gap-8 grid-cols-1 md:grid-cols-1 lg:grid-cols-3 ">
+        <div>
+          <h2 className="text-3xl text-center font-bold mb-4">
+            <button className="btn uppercase font-bold">
+              All Task
+              <div className="badge badge-secondary">{tasks.length}</div>
+            </button>
+          </h2>
+          <div className="grid gap-5">
+            {tasks.map((task) => (
+              <AllTask
                 key={task._id}
-                className="bg-white p-4 rounded-lg shadow-md relative"
-              >
-                <div className="absolute top-2 right-2 flex space-x-2">
-                  <Link to={`/dashboard/updateItem/${task._id}`}>
-                    <FaEdit className="cursor-pointer text-blue-500 hover:text-blue-700" />
-                  </Link>
-                  <FaTrash
-                    onClick={() => handleDelete(task)}
-                    className="cursor-pointer text-red-500 hover:text-red-700"
-                  />
-                </div>
-                <h2 className="text-xl font-semibold mb-2">{task?.title}</h2>
-                <p className="text-sm font-medium mb-2">{task.description}</p>
-              </div>
+                task={task}
+                handleCompleted={handleCompleted}
+                handleDelete={handleDelete}
+              ></AllTask>
             ))}
+          </div>
         </div>
+
+        {/* Complete Section */}
+        <CompleteTask
+          completedTasks={filteredTasks.filter(
+            (task) => task.completed === true
+          )}
+          handleDelete={handleDelete}
+        />
+        {/* Incomplete Section */}
+        <IncompleteTask
+          incompleteTasks={filteredTasks.filter(
+            (task) => task.completed !== true
+          )}
+          handleDelete={handleDelete}
+        />
       </div>
     </div>
   );

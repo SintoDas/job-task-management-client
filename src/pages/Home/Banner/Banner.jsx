@@ -20,7 +20,7 @@ const Banner = () => {
       animate="visible"
     >
       <motion.div
-        className="bg-blue-200 text-black"
+        className="bg-blue-400 text-white"
         variants={containerVariants}
         initial="hidden"
         animate="visible"
@@ -35,13 +35,13 @@ const Banner = () => {
           <motion.p className="mt-2" variants={textVariants}>
             Stay organized and boost your productivity!
           </motion.p>
-          <Link to="/login">
+          <Link to="/signUp">
             <motion.button
               className="btn btn-outline my-4 text-black"
               whileHover={{ scale: 1.1 }}
               whileTap={{ scale: 0.9 }}
             >
-              Let’s Explore
+              To Explore Register Now!!
             </motion.button>
           </Link>
         </div>

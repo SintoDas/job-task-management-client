@@ -5,9 +5,9 @@ const UserHome = () => {
   const { user } = useContext(AuthContext);
   return (
     <div className="px-4 md:px-10 py-4 md:py-10 flex flex-col md:flex-row justify-between items-center">
-      <h2 className="text-xl mb-2 md:mb-0">
+      <h2 className="text-xl text-white mb-2 md:mb-0">
         Hi, welcome
-        <span className="text-blue-600 text-lg md:p-2">
+        <span className="text-white font-bold text-lg md:p-2">
           {user?.displayName ? user.displayName : "Back"}
         </span>
       </h2>

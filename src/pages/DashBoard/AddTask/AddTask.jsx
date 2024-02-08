@@ -1,10 +1,12 @@
 import { useForm } from "react-hook-form";
 import useAxiosPublic from "../../../hooks/useAxiosPublic";
 import Swal from "sweetalert2";
+import { useNavigate } from "react-router-dom";
 
 const AddTask = () => {
   const { register, handleSubmit, setValue } = useForm();
   const axiosPublic = useAxiosPublic();
+  const navigate = useNavigate();
 
   const onSubmit = async (data) => {
     // Handle form submission logic here
@@ -26,6 +28,7 @@ const AddTask = () => {
         showConfirmButton: false,
         timer: 1500,
       });
+      navigate("/dashboard/to-do");
     }
 
     // Clear the form after submission

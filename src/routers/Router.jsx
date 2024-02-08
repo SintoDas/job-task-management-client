@@ -53,7 +53,9 @@ export const router = createBrowserRouter([
         path: "updateItem/:id",
         element: <EditItem></EditItem>,
         loader: ({ params }) =>
-          fetch(`http://localhost:5000/tasks/${params.id}`),
+          fetch(
+            `https://job-task-management-server.vercel.app/tasks/${params.id}`
+          ),
       },
     ],
   },
